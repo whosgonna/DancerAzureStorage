@@ -28,7 +28,7 @@ get '/upload' => sub {
 any ['get', 'post'] => '/signature' => sub {
     my $params = query_parameters;
     
-    my $sas_key = config->{azure}->{password} // $ENV{SAS_PASSWORD}
+    my $sas_key = config->{azure}->{password} // $ENV{SAS_PASSWORD};
 
     info "===BLOBURI=== " . query_parameters->get('bloburi');
 
