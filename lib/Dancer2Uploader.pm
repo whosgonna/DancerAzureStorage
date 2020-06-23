@@ -1,6 +1,6 @@
 package Dancer2Uploader;
 use Dancer2;
-use v5.326;
+use v5.26;
 use Azure::Blob::SAS;
 use Data::Printer;
 
