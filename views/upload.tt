@@ -3,56 +3,44 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.16.2/azure.fine-uploader/fine-uploader-gallery.min.css" rel="stylesheet">
+	<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.16.2/azure.fine-uploader/fine-uploader-gallery.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.16.2/azure.fine-uploader/fine-uploader-new.min.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="<% request.uri_base %>/css/fine-uploader-new.css" />
+    <link rel="stylesheet" href="<% request.uri_base %>/css/uploader.css" />
+    <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.16.2/azure.fine-uploader/azure.fine-uploader.min.js"></script>
-    <script type="text/template" id="qq-template">
-        <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="Drop files here">
+    <script type="text/template" id="qq-template-manual-trigger">
+        <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
             <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
                 <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
             </div>
             <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
                 <span class="qq-upload-drop-area-text-selector"></span>
             </div>
-            <div class="qq-upload-button-selector qq-upload-button">
-                <div>Upload a file</div>
+            <div class="buttons">
+                <div class="qq-upload-button-selector qq-upload-button">
+                    <div>Select files</div>
+                </div>
             </div>
             <span class="qq-drop-processing-selector qq-drop-processing">
                 <span>Processing dropped files...</span>
                 <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
             </span>
-            <ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">
+            <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
                 <li>
-                    <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
-                    <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+                    <div class="qq-progress-bar-container-selector">
                         <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
                     </div>
                     <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
-                    <div class="qq-thumbnail-wrapper">
-                        <img class="qq-thumbnail-selector" qq-max-size="120" qq-server-scale>
-                    </div>
-                    <button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>
-                    <button type="button" class="qq-upload-retry-selector qq-upload-retry">
-                        <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
-                        Retry
-                    </button>
-
-                    <div class="qq-file-info">
-                        <div class="qq-file-name">
-                            <span class="qq-upload-file-selector qq-upload-file"></span>
-                            <span class="qq-edit-filename-icon-selector qq-btn qq-edit-filename-icon" aria-label="Edit filename"></span>
-                        </div>
-                        <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
-                        <span class="qq-upload-size-selector qq-upload-size"></span>
-                        <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">
-                            <span class="qq-btn qq-delete-icon" aria-label="Delete"></span>
-                        </button>
-                        <button type="button" class="qq-btn qq-upload-pause-selector qq-upload-pause">
-                            <span class="qq-btn qq-pause-icon" aria-label="Pause"></span>
-                        </button>
-                        <button type="button" class="qq-btn qq-upload-continue-selector qq-upload-continue">
-                            <span class="qq-btn qq-continue-icon" aria-label="Continue"></span>
-                        </button>
-                    </div>
+                    <img class="qq-thumbnail-selector" qq-max-size="100" qq-server-scale>
+                    <span class="qq-upload-file-selector qq-upload-file"></span>
+                    <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+                    <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                    <span class="qq-upload-size-selector qq-upload-size"></span>
+                    <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
+                    <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
+                    <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+                    <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
                 </li>
             </ul>
 
@@ -81,34 +69,78 @@
             </dialog>
         </div>
     </script>
-
-    <title>Fine Uploader Gallery UI</title>
 </head>
 <body>
     <div id="uploader"></div>
+
+    <form id='uploader-metadata-form'>
+        <div class='input-group'>
+            <label for='file-version'>File Version:</lable>
+            <input id='file-version' name='file-version'>
+        </div>
+        <div class='input-group'>
+            <label for='username'>Username:</lable>
+            <input id='username' name='username'>
+        </div>
+        <div class='input-group'>
+            <button type="submit" id="trigger-upload" class="btn btn-primary">
+                <span class="iconify" data-icon="mdi:upload" data-inline="false"></span>
+                Upload
+            </button>
+        </div>
+    </form>
+
+    <!--<script src='<% request.uri_base %>/javascripts/uploader.js'></script>-->
     <script>
         // Some options to pass to the uploader are discussed on the next page
-        var uploader = new qq.azure.FineUploader({
-            element: document.getElementById("uploader"),
-            //blobProperties: {
-            //    name: 'filename'
-            //},
-            request: {
-                endpoint: 'https://<% service %>.blob.core.windows.net/<% container %>'
-            },
-            signature: {
-                endpoint: '/signature'
-            },
-            uploadSuccess: {
-                endpoint: '/success'
-            },
-            retry: {
-               enableAuto: true
-            },
-            deleteFile: {
-                enabled: false
-            }
+        const uploader = new qq.azure.FineUploader({
+        element: document.getElementById("uploader"),
+        template: "qq-template-manual-trigger",
+        //blobProperties: {
+        //    name: 'filename'
+        //},
+        request: {
+            endpoint: "https://<% service %>.blob.core.windows.net/<% container %>",
+        },
+        signature: {
+            endpoint: "/signature",
+        },
+        uploadSuccess: {
+            endpoint: "/success",
+        },
+        retry: {
+            enableAuto: true,
+        },
+        deleteFile: {
+            enabled: false,
+        },
+        autoUpload: false,
+        multiple: false,
+        })
+
+        const uploadForm = document.querySelector("#uploader-metadata-form")
+
+        function upload() {
+            const fileVersion = uploadForm.elements["file-version"].value
+            const username = uploadForm.elements["username"].value
+            console.log({ fileVersion, username })
+
+            const fileId = uploader.getUploads()[0].id
+
+            uploader.setCustomHeaders({
+                "x-ms-file-version": fileVersion,
+                "x-ms-username": username,
+            })
+
+            uploader.uploadStoredFiles()
+        }
+
+        // Also upload on form submit
+        uploadForm.addEventListener("submit", (e) => {
+            e.preventDefault()
+            upload()
         })
     </script>
+
 </body>
 </html>
