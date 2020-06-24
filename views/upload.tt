@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.16.2/azure.fine-uploader/fine-uploader-gallery.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.16.2/azure.fine-uploader/fine-uploader-new.min.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="<% request.uri_base %>/css/fine-uploader-new.css" />
     <link rel="stylesheet" href="<% request.uri_base %>/css/uploader.css" />
     <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
@@ -90,7 +88,6 @@
         </div>
     </form>
 
-    <!--<script src='<% request.uri_base %>/javascripts/uploader.js'></script>-->
     <script>
         // Some options to pass to the uploader are discussed on the next page
         const uploader = new qq.azure.FineUploader({
@@ -127,10 +124,7 @@
 
             const fileId = uploader.getUploads()[0].id
 
-            uploader.setCustomHeaders({
-                "x-ms-file-version": fileVersion,
-                "x-ms-username": username,
-            })
+            console.log(uploader.setParams({ fileVersion, username }, fileId))
 
             uploader.uploadStoredFiles()
         }
