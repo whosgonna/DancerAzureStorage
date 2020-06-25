@@ -1,3 +1,21 @@
+### First stage, just to add our package dependencies. We put this on a
+### separate stage to be able to reuse them across the "build" and
+### "devel" phases lower down
+FROM melopt/perl-alt:latest-build AS perl_package_deps
+
+### Add any packaged dependencies that your application might need. Make
+### sure you use the -devel or -libs package, as this is to be used to
+### build your dependencies and app. Tthe postgres-libs shown below is
+### just an example
+RUN apk --no-cache add git
+
+
+### Second stage, build our app. We start from the previous stage, package_deps
+#FROM package_deps AS builder
+FROM perl_package_deps AS perl-builder
+
+### We copy all cpanfiles (this includes the optional cpanfile.snapshot)
+### to the application directory, and we install the dependencies. Note
 ### that by default pdi-build-deps will install our apps dependencies
 ### under /deps. This is important later on.
 #COPY cpanfile* /app/
